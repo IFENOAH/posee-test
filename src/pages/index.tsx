@@ -7,13 +7,10 @@ import { useCategoriesQuery, useGetCategoriesQuery, useProductsQuery } from './a
 import { ChangeEvent, FormEvent, useRef, useState } from 'react'
 import axios from 'axios'
 import { motion } from "framer-motion"
+import { InferGetServerSidePropsType } from 'next'
 const inter = Inter({ subsets: ['latin'] })
 
-interface IHomeProps {
-  products: any;
-  categories: any;
-}
-export default function Home({ products, categories }:IHomeProps) {
+export default function Home({ products, categories }:InferGetServerSidePropsType<typeof getServerSideProps>) {
 
   const [category, setCategory] = useState('All Items')
   const { data:filteredData, isFetching } = useCategoriesQuery({category: category})
@@ -49,10 +46,10 @@ export default function Home({ products, categories }:IHomeProps) {
           </div>
         </header>
         <motion.div className='overflow-y-auto h-[650px] min-h-[650px]'>
-          {/* {isFetching ?  */}
-            {/* <p className='w-full  flex items-center justify-center '>Loading...</p> */}
-            <ProductList data={  category === 'All Items' ? products : filteredData } />
-          {/* // } */}
+          {isFetching ? 
+            <p className='w-full  flex items-center justify-center '>Loading...</p>
+            : <ProductList data={ category === 'All Items' ? products : filteredData } />
+          }
         </motion.div>
       </div>
     </main>

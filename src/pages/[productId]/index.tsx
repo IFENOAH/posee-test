@@ -1,16 +1,13 @@
 import { Button } from "@/components/forms/button";
 import axios from "axios";
+import { InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import * as Icon from 'react-feather'
 
-interface IDetailsProp {
-    data: any
-}
-
-function ProductDetails({data}:IDetailsProp){
+function ProductDetails({data}:InferGetServerSidePropsType<typeof getServerSideProps>){
 
     const router = useRouter()
     const loaderProp =(src:any) => {
