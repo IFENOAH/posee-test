@@ -3,55 +3,21 @@ import Head from 'next/head'
 import { ProductList } from '@/components/Products/productList'
 import { Hero } from '@/components/Hero/hero'
 import { CustomInput } from '@/components/forms/input'
-
+import { useCategoriesQuery, useGetCategoriesQuery, useProductsQuery } from './api/productsApi'
+import { ChangeEvent, FormEvent, useRef, useState } from 'react'
+import axios from 'axios'
+import { motion } from "framer-motion"
 const inter = Inter({ subsets: ['latin'] })
 
-const fakeData = [
-  {
-    id: 1,
-    price: 25.90,
-    title: "Shoe for boys",
-    imageUrl: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-2529148.jpg&fm=jpg',
-  },
-  {
-    id: 2,
-    price: 25.90,
-    title: "Shoe for boys",
-    imageUrl: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-2529148.jpg&fm=jpg',
-  },
-  {
-    id: 3,
-    price: 25.90,
-    title: "Shoe for boys",
-    imageUrl: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-2529148.jpg&fm=jpg',
-  },
-  {
-    id: 4,
-    price: 25.90,
-    title: "Shoe for boys",
-    imageUrl: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-2529148.jpg&fm=jpg',
-  },
-  {
-    id: 5,
-    price: 25.90,
-    title: "Shoe for boys",
-    url: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-2529148.jpg&fm=jpg',
-  },
-  {
-    id: 5,
-    price: 25.90,
-    title: "Shoe for boys",
-    url: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-2529148.jpg&fm=jpg',
-  },
-  {
-    id: 5,
-    price: 25.90,
-    title: "Shoe for boys",
-    url: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?cs=srgb&dl=pexels-melvin-buezo-2529148.jpg&fm=jpg',
-  },
-]
+interface IHomeProps {
+  products: any;
+  categories: any;
+}
+export default function Home({ products, categories }:IHomeProps) {
 
-export default function Home() {
+  const [category, setCategory] = useState('All Items')
+  const { data:filteredData, isFetching } = useCategoriesQuery({category: category})
+
   return (
     <main
       className={`${inter.className} space-y-6`}
@@ -66,18 +32,41 @@ export default function Home() {
 
       <Hero />
       <div className='p-8 space-y-8'>
-
-        <header className='flex items-center space-x-8'>
-          <h2 className='font-extrabold text-gray-900 text-2xl'>Our Available Products</h2>
-          <div>
-            <CustomInput
-              placeholder="Search for products..."
-              type="search"
-            />
+        <header className='flex flex-col md:flex-row items-start justify-center md:items-center md:justify-between space-y-6 md:space-y-0'>
+          <h2 className='underline font-extrabold text-gray-900 text-2xl'>Our Available Products&nbsp; &nbsp; &nbsp; &nbsp; </h2>
+          <div className=''>
+            <div className='flex items-center space-x-4'>
+              <label className='text-xs'>
+                Sort by categories: 
+              </label>
+              <select onChange={e => setCategory(e.currentTarget.value)} value={category} className='text-xs border p-2 rounded-lg cursor-pointer'>
+                <option>All Items</option>
+                {categories?.map((item:string) => (
+                  <option key={item}>{item}</option>
+                ))}
+              </select>
+            </div>
           </div>
         </header>
-        <ProductList data={fakeData} />
+        <motion.div className='overflow-y-auto h-[650px] min-h-[650px]'>
+          {/* {isFetching ?  */}
+            {/* <p className='w-full  flex items-center justify-center '>Loading...</p> */}
+            <ProductList data={  category === 'All Items' ? products : filteredData } />
+          {/* // } */}
+        </motion.div>
       </div>
     </main>
   )
+}
+
+export async function getServerSideProps() {
+
+  const [ { data:products }, { data:categories } ] = await Promise.all([
+    axios.get(`https://fakestoreapi.com/products`, {}),
+    axios.get(`https://fakestoreapi.com/products/categories`, {})
+  ])
+
+  return {
+    props: { products, categories }
+  };
 }

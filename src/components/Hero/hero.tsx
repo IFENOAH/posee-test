@@ -14,7 +14,7 @@ export const Hero = () => {
         }}>
 
         <article className='flex items-center justify-center flex-col py-4 w-full space-y-4 '>
-            <span className='text-4xl lg:text-5xl font-extrabold text-white'>
+            <span className='text-center text-4xl font-extrabold text-white'>
                 Shop Our New Collections
             </span>
             <p className='text-center text-white text-lg font-normal w-full'>
