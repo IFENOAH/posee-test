@@ -44,23 +44,23 @@ function ProductDetails({data}:InferGetServerSidePropsType<typeof getServerSideP
                 <section className="w-full md:w-1/2 space-y-6">
                     <article className="space-y-6">
                         <div>
-                            <span className="underline pr-3 font-bold text-sm">Item: </span>
-                            <p className="font-normal">{data?.title}</p>
+                            <span className="underline pr-3 font-extrabold text-md">Item: </span>
+                            <p className="text-sm font-normal">{data?.title}</p>
                         </div>
 
                         <div>
-                            <span className="underline pr-3 font-bold text-sm">Desc: </span>
-                            <p className="font-normal">{data?.description}</p>
+                            <span className="underline pr-3 font-extrabold text-md">Desc: </span>
+                            <p className="text-sm font-normal">{data?.description}</p>
                         </div>
 
                         <div>
-                            <span className="underline pr-3 font-bold text-sm">Category: </span>
-                            <p className="font-normal">{data?.category}</p>
+                            <span className="underline pr-3 font-extrabold text-md">Category: </span>
+                            <p className="text-sm font-normal">{data?.category}</p>
                         </div>
 
                         <div>
-                            <span className="underline pr-3 font-bold text-sm">Price: </span>
-                            <p className="font-normal">${data?.price.toFixed(2)}</p>
+                            <span className="underline pr-3 font-extrabold text-md">Price: </span>
+                            <p className="text-sm font-normal">${data?.price.toFixed(2)}</p>
                         </div>
                     </article>
 

@@ -30,13 +30,13 @@ export default function Home({ products, categories }:InferGetServerSidePropsTyp
       <Hero />
       <div className='p-8 space-y-8'>
         <header className='flex flex-col md:flex-row items-start justify-center md:items-center md:justify-between space-y-6 md:space-y-0'>
-          <h2 className='underline font-extrabold text-gray-900 text-2xl'>Our Available Products&nbsp; &nbsp; &nbsp; &nbsp; </h2>
+          <h2 className='underline underline-offset-[10px] font-extrabold text-gray-900 text-2xl'>Our Available Products&nbsp; </h2>
           <div className=''>
             <div className='flex items-center space-x-4'>
               <label className='text-xs'>
                 Sort by categories: 
               </label>
-              <select onChange={e => setCategory(e.currentTarget.value)} value={category} className='text-xs border p-2 rounded-lg cursor-pointer'>
+              <select onChange={e => setCategory(e.currentTarget.value)} value={category} className='text-sm border p-3 rounded-lg cursor-pointer'>
                 <option>All Items</option>
                 {categories?.map((item:string) => (
                   <option key={item}>{item}</option>
