@@ -60,7 +60,7 @@ function ProductDetails({data}:InferGetServerSidePropsType<typeof getServerSideP
 
                         <div>
                             <span className="underline pr-3 font-extrabold text-md">Price: </span>
-                            <p className="text-sm font-normal">${data?.price.toFixed(2)}</p>
+                            <p className="text-sm font-normal">${data?.price?.toFixed(2)}</p>
                         </div>
                     </article>
 

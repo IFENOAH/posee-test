@@ -45,7 +45,7 @@ export default function Home({ products, categories }:InferGetServerSidePropsTyp
             </div>
           </div>
         </header>
-        <motion.div className='overflow-y-auto h-[650px] min-h-[650px]'>
+        <motion.div className='overflow-y-auto min-h-[650px]'>
           {isFetching ? 
             <p className='w-full  flex items-center justify-center '>Loading...</p>
             : <ProductList data={ category === 'All Items' ? products : filteredData } />
